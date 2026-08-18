@@ -24,3 +24,19 @@ export async function createTask(req, res) {
         });
     }
 }
+
+export async function getTasks(req, res) {
+    try {
+        const tasks = await Task.findAll();
+
+        res.status(200).json(tasks);
+
+    } catch (error) {
+        console.error("GET TASKS ERROR:", error);
+
+        res.status(500).json({
+            message: "Failed to fetch tasks",
+            error: error.message
+        });
+    }
+}
