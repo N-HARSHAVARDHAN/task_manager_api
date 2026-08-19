@@ -107,16 +107,16 @@ export async function getTasks(req, res) {
                 order = requestedOrder;
             }
         }
-        
+
         const options = {
             where
         };
 
         if(sortBy){
-            options.order =[sortBy,order ||"ASC"];
+            options.order =[[sortBy,order ||"ASC"]];
         }
 
-        const tasks = await Task.findAll({options});
+        const tasks = await Task.findAll(options);
         res.status(200).json(tasks);
 
     } catch (error) {
@@ -163,7 +163,7 @@ export async function updateTask(req, res) {
             }
         });
         if (!task) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: "not found"
             });
         }
@@ -194,7 +194,7 @@ export async function deleteTask(req, res) {
             }
         });
         if (!task) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: "not found"
             });
         }
