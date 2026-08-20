@@ -3,14 +3,15 @@ import sequelize from "./config/database.js"
 import dotenv from "dotenv";
 import taskRoutes from "./routes/taskRoutes.js"
 import authRoutes from "./routes/authRoutes.js"
+import { errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 console.log("taskRoutes:", taskRoutes);
-app.use("/tasks",taskRoutes);
 app.use("/auth",authRoutes);
+app.use("/tasks",taskRoutes);
 app.get("/", (req, res) => {
     res.json({
         message: "Task Manager API is running"
@@ -21,6 +22,7 @@ app.get("/test", (req, res) => {
         message: "Test route works"
     });
 });
+app.use(errorHandler);
 
 async function startServer() {
     try {

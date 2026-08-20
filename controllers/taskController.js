@@ -1,7 +1,7 @@
 import { Task } from "../models/index.js";
 import { Op } from "sequelize";
 
-export async function createTask(req, res) {
+export async function createTask(req, res, next) {
     try {
         console.log("createTask controller reached");
 
@@ -17,12 +17,7 @@ export async function createTask(req, res) {
         res.status(201).json(task);
 
     } catch (error) {
-        console.error("CREATE TASK ERROR:", error);
-
-        res.status(500).json({
-            message: "Failed to create task",
-            error: error.message
-        });
+        next(error)
     }
 }
 
@@ -120,12 +115,7 @@ export async function getTasks(req, res) {
         res.status(200).json(tasks);
 
     } catch (error) {
-        console.error("GET TASKS ERROR:", error);
-
-        res.status(500).json({
-            message: "Failed to fetch tasks",
-            error: error.message
-        });
+        next(error);
     }
 }
 
@@ -145,11 +135,7 @@ export async function getTask(req, res) {
         res.status(200).json(task);
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: 'failed to fetch task',
-            error: error.message
-        });
+        next(error);
     }
 
 }
@@ -177,10 +163,7 @@ export async function updateTask(req, res) {
         res.status(200).json(task);
     }
     catch (error) {
-        res.status(500).json({
-            message: "failed to update task",
-            error: error.message
-        });
+        next(error);
     }
 
 }
@@ -204,9 +187,6 @@ export async function deleteTask(req, res) {
         });
     }
     catch (error) {
-        res.status(500).json({
-            message: 'failed to fetch',
-            error: error.message
-        });
+       next(error);
     }
 }

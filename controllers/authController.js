@@ -2,7 +2,7 @@ import { User } from "../models/index.js";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export async function registerUser(req,res) {
+export async function registerUser(req,res,next) {
     try{
         const hashedPassword = await bycrypt.hash(req.body.password,10);
         const user = await User.create({
@@ -20,10 +20,7 @@ export async function registerUser(req,res) {
         });
     }
     catch(error){
-        res.status(500).json({
-            message:'failed to register',
-            error:error.message
-        });
+       next(error);
     }
 }
 
@@ -64,9 +61,6 @@ export async function loginUser(req,res) {
         });
     }
     catch(error){
-        res.status(500).json({
-            message:'failed to login',
-            error:error.message
-        });
+       next(error);
     }
 }
