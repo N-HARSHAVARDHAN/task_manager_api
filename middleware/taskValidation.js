@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const taskSchema = Joi.object({
     title:Joi.string().required(),
-    desciption:Joi.string().allow(""),
+    description:Joi.string().allow(""),
     priority:Joi.string()
     .valid("low","medium","high").required(),
 

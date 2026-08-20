@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
 import env from "../config/env.js";
+
 export async function registerUser(req,res,next) {
     try{
         const {username,email} = req.body;
@@ -69,7 +70,7 @@ export async function loginUser(req,res,next) {
         }
         const token = jwt.sign(
             {userId:user.id},
-            env.JWT_SECRET,
+            env.jwt.secret,
             {expiresIn:"1h"}
         );
         res.status(200).json({

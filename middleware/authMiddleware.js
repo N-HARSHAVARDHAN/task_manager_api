@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
-import env from '../config/env';
+import env from '../config/env.js';
+
 export function authMiddleware(req,res,next){
     try{
         const authHeader = req.headers.authorization;
@@ -7,6 +8,7 @@ export function authMiddleware(req,res,next){
             return res.status(401).json({
                 message:"no token provided"
             });
+
         }
         const token = authHeader.split(" ")[1];
         const decoded = jwt.verify(

@@ -10,12 +10,17 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Task.belongsTo(models.User,{
-        foreignKey:'userId'
+      Task.belongsTo(models.User, {
+        foreignKey: 'userId'
       });
     }
   }
   Task.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -42,7 +47,7 @@ export default (sequelize, DataTypes) => {
     },
 
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false
     }
 

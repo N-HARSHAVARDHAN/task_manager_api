@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import env from "./env";
+import env from "./env.js";
 dotenv.config();
 
 export default {
@@ -7,6 +7,6 @@ export default {
         password: env.database.password,
         database: env.database.name,
         host: env.database.host,
-        port: env.port,
+        port: env.database.port,
         dialect: "postgres"
 };

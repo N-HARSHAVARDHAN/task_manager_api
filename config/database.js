@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
-import env from "./env";
+import env from "./env.js";
 dotenv.config();
 
 const sequelize = new Sequelize(
@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
     env.database.password,
     {
         host: env.database.host,
-        port: env.port,
+        port: env.database.port,
         dialect: "postgres"
     }
 );

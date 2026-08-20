@@ -60,7 +60,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.post("/", authMiddleware,validateTask,createTask);
+router.post("/", authMiddleware, validateTask, createTask);
 
 /**
  * @swagger
@@ -79,7 +79,6 @@ router.post("/", authMiddleware,validateTask,createTask);
  *           minimum: 1
  *           default: 1
  *         description: Page number
- *
  *       - in: query
  *         name: limit
  *         schema:
@@ -88,42 +87,36 @@ router.post("/", authMiddleware,validateTask,createTask);
  *           maximum: 100
  *           default: 10
  *         description: Number of tasks per page
- *
  *       - in: query
  *         name: priority
  *         schema:
  *           type: string
  *           enum: [low, medium, high]
  *         description: Filter tasks by priority
- *
  *       - in: query
  *         name: status
  *         schema:
  *           type: string
  *           enum: [pending, completed]
  *         description: Filter tasks by status
- *
  *       - in: query
  *         name: dueDateFrom
  *         schema:
  *           type: string
  *           format: date
  *         description: Get tasks from this date
- *
  *       - in: query
  *         name: dueDateTo
  *         schema:
  *           type: string
  *           format: date
  *         description: Get tasks until this date
- *
  *       - in: query
  *         name: sortBy
  *         schema:
  *           type: string
  *           enum: [dueDate, priority]
  *         description: Field to sort by
- *
  *       - in: query
  *         name: order
  *         schema:
@@ -131,7 +124,6 @@ router.post("/", authMiddleware,validateTask,createTask);
  *           enum: [ASC, DESC]
  *           default: ASC
  *         description: Sorting direction
- *
  *     responses:
  *       200:
  *         description: Tasks fetched successfully
@@ -142,7 +134,7 @@ router.post("/", authMiddleware,validateTask,createTask);
  *       500:
  *         description: Server error
  */
-router.get("/", authMiddleware,getTasks);
+router.get("/", authMiddleware, getTasks);
 
 /**
  * @swagger
@@ -158,11 +150,34 @@ router.get("/", authMiddleware,getTasks);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
+ *           format: uuid
  *         description: ID of the task
  *     responses:
  *       200:
  *         description: Task fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 title:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 priority:
+ *                   type: string
+ *                 dueDate:
+ *                   type: string
+ *                   format: date
+ *                 status:
+ *                   type: string
+ *                 userId:
+ *                   type: string
+ *                   format: uuid
  *       401:
  *         description: Missing or invalid JWT token
  *       404:
@@ -170,7 +185,7 @@ router.get("/", authMiddleware,getTasks);
  *       500:
  *         description: Server error
  */
-router.get("/:id", authMiddleware ,getTask);
+router.get("/:id", authMiddleware, getTask);
 
 /**
  * @swagger
@@ -186,7 +201,8 @@ router.get("/:id", authMiddleware ,getTask);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
+ *           format: uuid
  *         description: ID of the task
  *     requestBody:
  *       required: true
@@ -246,7 +262,8 @@ router.put("/:id", authMiddleware, validateTask, updateTask);
  *         name: id
  *         required: true
  *         schema:
- *           type: integer
+ *           type: string
+ *           format: uuid
  *         description: ID of the task
  *     responses:
  *       200:
@@ -258,6 +275,6 @@ router.put("/:id", authMiddleware, validateTask, updateTask);
  *       500:
  *         description: Server error
  */
-router.delete("/:id",authMiddleware ,deleteTask);
+router.delete("/:id", authMiddleware, deleteTask);
 
 export default router;
