@@ -1,4 +1,5 @@
 import swaggerJsdoc from "swagger-jsdoc";
+import env from "./env.js";
 
 const options = {
     definition: {
@@ -12,7 +13,7 @@ const options = {
 
         servers: [
             {
-                url: "http://localhost:5000"
+                url: env.swagger.serverUrl
             }
         ],
 

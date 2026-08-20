@@ -1,32 +1,12 @@
 import dotenv from "dotenv";
-
+import env from "./env";
 dotenv.config();
 
 export default {
-    development: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: "postgres",
-    },
-
-    test: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
+        username: env.database.user,
+        password: env.database.password,
+        database: env.database.name,
+        host: env.database.host,
+        port: env.port,
         dialect: "postgres"
-    },
-
-    production: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: "postgres"
-    }
 };

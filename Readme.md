@@ -996,24 +996,3 @@ Error Response
 ```
 
 ---
-
-## 28. Security
-
-The project follows several basic security practices:
-
-* Passwords are hashed using bcrypt.
-* JWT is used for authentication.
-* JWT secrets are stored in environment variables.
-* Database credentials are stored in environment variables.
-* `.env` is excluded from Git.
-* Protected routes require authentication.
-* Users can access only their own tasks.
-* Input validation prevents invalid task data from reaching controllers.
-
----
-
-## 29. Conclusion
-
-This project demonstrates a complete REST API using Node.js, Express.js, PostgreSQL, Sequelize, JWT authentication, bcrypt password hashing, validation, filtering, sorting, pagination, migrations, global error handling, and Swagger/OpenAPI documentation.
-
-It provides a practical backend structure that can be extended with features such as refresh tokens, task categories, reminders, role-based authorization, automated tests, and deployment.

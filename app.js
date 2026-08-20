@@ -6,7 +6,8 @@ import authRoutes from "./routes/authRoutes.js"
 import { errorHandler } from './middleware/errorMiddleware.js';
 import swaggerSpec from './config/swagger.js';
 import swaggerUi from "swagger-ui-express";
-
+import logger from './utils/logger.js';
+import env from './config/env.js';
 dotenv.config();
 const app = express();
 
@@ -24,17 +25,17 @@ app.use(errorHandler);
 async function startServer() {
     try {
         await sequelize.authenticate();
-        console.log("Database connected successfully");
+        logger.log("Database connected successfully");
 
-        const PORT = process.env.PORT || 5000;
+        const PORT = env.port || 5000;
 
         app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+            logger.log(`Server running on port ${PORT}`);
         });
     } 
     catch (error) {
-        console.error("Unable to connect to database:");
-        console.error(error);
+        logger.error("Unable to connect to database:");
+        logger.error(error);
     }
 }
 startServer();

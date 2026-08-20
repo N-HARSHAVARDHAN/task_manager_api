@@ -1,41 +1,46 @@
-export function validateRegister(req, res, next) {
-    const { username,email, password } = req.body;
+import Joi from "joi";
 
-     if (!username || !username.trim()) {
-        return res.status(400).json({
-            message: "Username is required"
-        });
-    }
+const registerSchema = Joi.object({
+    username: Joi.string()
+    .trim().required(),
 
-    if (!email || !email.trim()) {
+    email:Joi.string()
+    .email().required(),
+
+    password: Joi.string()
+    .min(6).required()
+});
+
+const loginSchema = Joi.object({
+    email:Joi.string()
+    .trim().required(),
+
+    password:Joi.string()
+    .min(6).required()
+});
+
+export function validateRegister(req,res,next){
+    const {error} = registerSchema.validate(req.body);
+
+    if(error){
         return res.status(400).json({
-            message: "email req"
-        });
-    }
-    if (!password) {
-        return res.status(400).json({
-            message: "password required"
-        });
-    }
-    if (password.length < 6) {
-        return res.status(400).json({
-            message: "password must be atleast 6"
+            message:error.details[0].message
         });
     }
     next();
 }
 
-export function validateLogin(req, res, next) {
-    const { email, password } = req.body;
-    if (!email || !email.trim()) {
+export function validateLogin(req,res,next){
+    const {error} = loginSchema.validate(req.body);
+
+    if(error){
         return res.status(400).json({
-            message: "email req"
-        });
-    }
-    if (!password) {
-        return res.status(400).json({
-            message: "password required"
+            message:error.details[0].message
         });
     }
     next();
 }
+
+
+
+

@@ -1,9 +1,31 @@
 import { User } from "../models/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import { Op } from "sequelize";
+import env from "../config/env.js";
 export async function registerUser(req,res,next) {
     try{
+        const {username,email} = req.body;
+        const existingUser = await User.findOne({
+            where:{
+                [Op.or]:[
+                    {username},
+                    {email}
+                ]
+            }
+        });
+        if(existingUser){
+            if(existingUser.username === username){
+                return res.status(409).json({
+                    message:"username already exists"
+                });
+            }
+            if(existingUser.email === email){
+                return res.status(409).json({
+                    message:"email already exists"
+                });
+            }
+        }
         const hashedPassword = await bcrypt.hash(req.body.password,10);
         const user = await User.create({
             username:req.body.username,
@@ -47,7 +69,7 @@ export async function loginUser(req,res,next) {
         }
         const token = jwt.sign(
             {userId:user.id},
-            process.env.JWT_SECRET,
+            env.JWT_SECRET,
             {expiresIn:"1h"}
         );
         res.status(200).json({
