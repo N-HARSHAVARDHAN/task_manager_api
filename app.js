@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import taskRoutes from "./routes/taskRoutes.js"
 import authRoutes from "./routes/authRoutes.js"
 import { errorHandler } from './middleware/errorMiddleware.js';
+import swaggerSpec from './config/swagger.js';
+import swaggerUi from "swagger-ui-express";
 
 dotenv.config();
 const app = express();
@@ -16,6 +18,7 @@ app.get("/", (req, res) => {
         message: "Task Manager API is running"
     });
 });
+app.use("/api-docs",swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorHandler);
 
 async function startServer() {
