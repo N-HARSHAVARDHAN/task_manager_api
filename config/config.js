@@ -10,7 +10,6 @@ export default {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         dialect: "postgres",
-        logging:console.log
     },
 
     test: {

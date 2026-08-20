@@ -3,8 +3,6 @@ import { Op } from "sequelize";
 
 export async function createTask(req, res, next) {
     try {
-        console.log("createTask controller reached");
-
         const task = await Task.create({
             title: req.body.title,
             description: req.body.description,
@@ -21,8 +19,22 @@ export async function createTask(req, res, next) {
     }
 }
 
-export async function getTasks(req, res) {
+export async function getTasks(req, res,next) {
     try {
+        const page = Number(req.query.page)||1;
+        const limit = Number(req.query.limit) || 10;
+
+        if(!Number.isInteger(page) || page<1){
+            return res.status(400).json({
+                message:"invalid page"
+            });
+        }
+        if(!Number.isInteger(limit) || limit<1 || limit >100){
+            return res.status(400).json({
+                message:"invalid limit"
+            });
+        }
+        const offset = (page -1) * limit;
 
         const where = {
             userId: req.user.userId
@@ -104,22 +116,33 @@ export async function getTasks(req, res) {
         }
 
         const options = {
-            where
+            where,
+            limit,offset
         };
 
         if(sortBy){
             options.order =[[sortBy,order ||"ASC"]];
         }
 
-        const tasks = await Task.findAll(options);
-        res.status(200).json(tasks);
+        const {rows , count} = await Task.findAndCountAll(options);
+        const totalPages = Math.ceil(count/limit);
+
+        res.status(200).json({
+            tasks:rows,
+            pagination:{
+                page,
+                limit,
+                totalTasks:count,
+                totalPages
+            }
+        });
 
     } catch (error) {
         next(error);
     }
 }
 
-export async function getTask(req, res) {
+export async function getTask(req, res,next) {
     try {
         const task = await Task.findOne({
             where: {
@@ -140,7 +163,7 @@ export async function getTask(req, res) {
 
 }
 
-export async function updateTask(req, res) {
+export async function updateTask(req, res,next) {
     try {
         const task = await Task.findOne({
             where: {
@@ -168,7 +191,7 @@ export async function updateTask(req, res) {
 
 }
 
-export async function deleteTask(req, res) {
+export async function deleteTask(req, res,next) {
     try {
         const task = await Task.findOne({
             where: {

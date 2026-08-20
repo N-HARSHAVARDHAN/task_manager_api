@@ -9,17 +9,11 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-console.log("taskRoutes:", taskRoutes);
 app.use("/auth",authRoutes);
 app.use("/tasks",taskRoutes);
 app.get("/", (req, res) => {
     res.json({
         message: "Task Manager API is running"
-    });
-});
-app.get("/test", (req, res) => {
-    res.json({
-        message: "Test route works"
     });
 });
 app.use(errorHandler);
