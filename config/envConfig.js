@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const env ={
-    exp_port:process.env.PORT || 5000,
+    expPort:process.env.PORT || 5000,
 
     database:{
         host:process.env.DB_HOST,

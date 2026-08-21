@@ -26,7 +26,7 @@ async function startServer() {
         await sequelize.authenticate();
         logger.info("Database connected successfully");
 
-        const PORT = env.exp_port || 5000;
+        const PORT = env.expPort || 5000;
 
         app.listen(PORT, () => {
             logger.info(`Server running on port ${PORT}`);
