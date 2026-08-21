@@ -2,7 +2,7 @@ import { User } from "../models/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
-import env from "../config/env.js";
+import env from "../config/envConfig.js";
 
 export async function registerUser(req,res,next) {
     try{

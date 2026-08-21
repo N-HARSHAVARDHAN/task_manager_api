@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize";
-import dotenv from "dotenv";
-import env from "./env.js";
-dotenv.config();
+
+import env from "./envConfig.js";
 
 const sequelize = new Sequelize(
     env.database.name,

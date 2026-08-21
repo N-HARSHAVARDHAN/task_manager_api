@@ -1,5 +1,11 @@
+import logger from "../utils/logger.js";
+
 export function errorHandler(error,req,res,next){
-    console.error(error);
+
+    logger.error("request error",{
+        error:error.message,
+        stack:error.stack
+    })
     if(error.name === 'SequelizeUniqueConstraintError'){
         return res.status(409).json({
             message:"username or email already exists"

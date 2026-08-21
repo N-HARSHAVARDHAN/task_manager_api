@@ -1,7 +1,9 @@
 import dotenv from "dotenv";
+
 dotenv.config();
+
 const env ={
-    port:process.env.PORT || 5000,
+    exp_port:process.env.PORT || 5000,
 
     database:{
         host:process.env.DB_HOST,
@@ -17,4 +19,5 @@ const env ={
         serverUrl:process.env.SWAGGER_SERVER_URL
     }
 };
+
 export default env;

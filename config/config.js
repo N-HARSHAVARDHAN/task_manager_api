@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-import env from "./env.js";
-dotenv.config();
+import env from "./envConfig.js";
 
 export default {
         username: env.database.user,

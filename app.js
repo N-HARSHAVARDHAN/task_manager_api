@@ -6,7 +6,7 @@ import { errorHandler } from './middleware/errorMiddleware.js';
 import swaggerSpec from './config/swagger.js';
 import swaggerUi from "swagger-ui-express";
 import logger from './utils/logger.js';
-import env from './config/env.js';
+import env from './config/envConfig.js';
 
 const app = express();
 
